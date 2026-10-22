@@ -8,6 +8,7 @@ import {
   getProducts,
   type Product,
 } from "@/lib/copper/catalog";
+import { PrivacyExplorer } from "@/components/copper/privacy-explorer";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -249,36 +250,21 @@ export function PlusPricing() {
 
 export function PrivacySummary() {
   const privacy = getPrivacySummary();
+  const [free, plus] = [
+    getPlans().find((plan) => plan.id === "free")!,
+    getPlans().find((plan) => plan.id === "copper-plus")!,
+  ];
   return (
     <section
       id="privacy"
       data-testid="privacy-summary"
-      className="bg-accent text-accent-foreground scroll-mt-16"
+      className="scroll-mt-16"
     >
-      <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-16 md:grid-cols-[1fr_auto]">
-        <div>
-          <h2 className="mb-2 text-3xl font-bold">
-            Your privacy, plainly explained
-          </h2>
-          <p className="mb-6 font-medium">
-            How Copper handles recordings under our {privacy.policy} privacy
-            policy.
-          </p>
-          <ul className="flex list-disc flex-col gap-3 pl-5">
-            {privacy.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-        </div>
-        <Image
-          src="/assets/brand/copper-mascot.png"
-          alt="Copper, the friendly robot mascot of Copper State Labs"
-          width={1254}
-          height={1254}
-          sizes="200px"
-          className="mx-auto h-auto w-40 md:w-52"
-        />
-      </div>
+      <PrivacyExplorer
+        wakeWord={privacy.wakeWord}
+        freeMemory={formatMemory(free.memoryDays)}
+        plusMemory={formatMemory(plus.memoryDays)}
+      />
     </section>
   );
 }

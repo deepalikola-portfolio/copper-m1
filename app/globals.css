@@ -143,3 +143,263 @@
     @apply font-heading;
   }
 }
+
+/*
+ * Privacy flip cards (components/copper/privacy-*.tsx). Back-face diagrams
+ * start paused and play once the card is flipped. Motion is off for people who
+ * ask for reduced motion; each diagram still reads correctly without it.
+ */
+.pc-tilt {
+  display: flex;
+  transition: transform 300ms ease;
+}
+.pc-tilt:hover {
+  transform: translateY(-6px) rotate(-0.4deg);
+}
+.pc-flip {
+  flex: 1;
+  perspective: 1400px;
+}
+.pc-flip-inner {
+  display: grid;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.pc-flip[data-flipped="true"] .pc-flip-inner {
+  transform: rotateY(180deg);
+}
+.pc-face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.pc-back {
+  transform: rotateY(180deg);
+}
+
+.pc-anim {
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-play-state: paused;
+  transform-box: fill-box;
+}
+.pc-flip[data-flipped="true"] .pc-anim {
+  animation-play-state: running;
+}
+.pc-float {
+  animation: pc-float 5s ease-in-out infinite;
+}
+.pc-delay-1 {
+  animation-delay: -1s;
+}
+.pc-delay-2 {
+  animation-delay: -2s;
+}
+.pc-delay-3 {
+  animation-delay: -3s;
+}
+
+.pc-glow {
+  animation-name: pc-glow;
+  animation-duration: 2s;
+  transform-origin: center;
+}
+.pc-pulse {
+  animation-name: pc-pulse;
+  animation-duration: 2.4s;
+}
+.pc-pulse-dot {
+  animation-name: pc-pulse-dot;
+  animation-duration: 1.6s;
+}
+.pc-wave {
+  animation-name: pc-wave;
+  animation-duration: 1.1s;
+  transform-origin: center;
+}
+.pc-grow {
+  animation-name: pc-grow;
+  transform-origin: left center;
+}
+.pc-type {
+  animation-name: pc-grow;
+  animation-duration: 4s;
+  transform-origin: left center;
+}
+.pc-pop {
+  animation-name: pc-pop;
+}
+.pc-travel-a {
+  animation-name: pc-travel-a;
+}
+.pc-travel-b {
+  animation-name: pc-travel-b;
+}
+.pc-forget {
+  animation-name: pc-forget;
+}
+.pc-chip {
+  animation-name: pc-chip;
+}
+
+@keyframes pc-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes pc-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes pc-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+@keyframes pc-pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.7);
+    opacity: 0.5;
+  }
+}
+@keyframes pc-wave {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+@keyframes pc-grow {
+  0% {
+    transform: scaleX(0);
+  }
+  35%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes pc-pop {
+  0%,
+  25% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  35%,
+  70% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pc-travel-a {
+  0%,
+  38% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  42% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+    transform: translate(142px, -62px);
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: translate(142px, -62px);
+  }
+}
+@keyframes pc-travel-b {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  18% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(150px);
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: translateX(150px);
+  }
+}
+@keyframes pc-forget {
+  0%,
+  35% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  60%,
+  90% {
+    opacity: 0;
+    transform: translateX(70px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes pc-chip {
+  0%,
+  50% {
+    opacity: 0;
+  }
+  62%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-tilt,
+  .pc-tilt:hover {
+    transition: none;
+    transform: none;
+  }
+  .pc-flip-inner {
+    transition: none;
+  }
+  .pc-float,
+  .pc-anim,
+  .pc-flip[data-flipped="true"] .pc-anim {
+    animation: none !important;
+  }
+  .pc-pop,
+  .pc-chip {
+    opacity: 1;
+  }
+}
