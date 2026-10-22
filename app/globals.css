@@ -240,6 +240,35 @@
 .pc-forget {
   animation-name: pc-forget;
 }
+.pc-say-1 {
+  animation-name: pc-say-1;
+  animation-duration: 10s;
+}
+.pc-say-2 {
+  animation-name: pc-say-2;
+  animation-duration: 10s;
+}
+.pc-say-3 {
+  animation-name: pc-say-3;
+  animation-duration: 10s;
+}
+.pc-sleep {
+  animation-name: pc-sleep;
+  animation-duration: 10s;
+}
+.pc-awake {
+  animation-name: pc-awake;
+  animation-duration: 10s;
+}
+.pc-halo {
+  animation-name: pc-halo;
+  animation-duration: 10s;
+  transform-origin: center;
+}
+.pc-travel-c {
+  animation-name: pc-travel-c;
+  animation-duration: 10s;
+}
 .pc-chip {
   animation-name: pc-chip;
 }
@@ -370,6 +399,123 @@
     transform: translateX(0);
   }
 }
+@keyframes pc-say-1 {
+  0%,
+  3% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  8%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pc-say-2 {
+  0%,
+  17% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  22%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pc-say-3 {
+  0%,
+  33% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  38%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pc-sleep {
+  0%,
+  44% {
+    opacity: 1;
+  }
+  47%,
+  96% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes pc-awake {
+  0%,
+  44% {
+    opacity: 0;
+  }
+  47%,
+  96% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pc-halo {
+  0%,
+  44% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  52% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  62% {
+    opacity: 0.6;
+    transform: scale(1.18);
+  }
+  72% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  82%,
+  100% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+}
+@keyframes pc-travel-c {
+  0%,
+  56% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  60% {
+    opacity: 1;
+  }
+  84% {
+    opacity: 1;
+    transform: translate(62px, -66px);
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: translate(62px, -66px);
+  }
+}
 @keyframes pc-chip {
   0%,
   50% {
@@ -401,5 +547,11 @@
   .pc-pop,
   .pc-chip {
     opacity: 1;
+  }
+  .pc-sleep {
+    opacity: 0;
+  }
+  .pc-halo {
+    opacity: 0.7;
   }
 }

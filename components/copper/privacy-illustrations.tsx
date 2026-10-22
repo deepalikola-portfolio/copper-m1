@@ -447,10 +447,18 @@ function Cloud({ x, y }: { x: number; y: number }) {
   );
 }
 
-function Back({ children, label }: { children: ReactNode; label: string }) {
+function Back({
+  children,
+  label,
+  h = 150,
+}: {
+  children: ReactNode;
+  label: string;
+  h?: number;
+}) {
   return (
     <svg
-      viewBox="0 0 320 150"
+      viewBox={`0 0 320 ${h}`}
       role="img"
       aria-label={label}
       className="h-auto w-full"
@@ -461,86 +469,176 @@ function Back({ children, label }: { children: ReactNode; label: string }) {
 }
 
 export function ListeningVisual({ wakeWord }: { wakeWord: string }) {
+  const bubble = (y: number, h: number, stroke: string) => ({
+    y,
+    h,
+    stroke,
+  });
+  const first = bubble(14, 26, SUNSET);
+  const second = bubble(46, 38, YELLOW);
+  const third = bubble(90, 38, SUNSET);
   return (
     <Back
-      label={`Chat bubbles stay inside the living room. Only after "${wakeWord}" does a request travel to the cloud.`}
+      h={200}
+      label={`Two people in a living room talk about running out of coriander. Nothing leaves the room until one says "${wakeWord}, add coriander to the shopping list." Then Mr. Copper lights up and the request travels to the cloud.`}
     >
       <rect
         x="6"
-        y="16"
-        width="190"
-        height="126"
+        y="4"
+        width="206"
+        height="192"
         rx="18"
         className="fill-secondary stroke-foreground/20"
         strokeDasharray="5 5"
       />
       <text
-        x="18"
-        y="34"
-        fontSize="10"
+        x="206"
+        y="196"
+        textAnchor="end"
+        fontSize="8.5"
         fontWeight="700"
         className="fill-muted-foreground"
       >
         Your living room
       </text>
-      <rect
-        x="20"
-        y="44"
-        width="70"
-        height="24"
-        rx="12"
-        className="fill-card stroke-foreground/20"
-      />
-      <g fill={COPPER}>
-        <circle cx="38" cy="56" r="2.6" />
-        <circle cx="55" cy="56" r="2.6" />
-        <circle cx="72" cy="56" r="2.6" />
-      </g>
-      <rect
-        x="100"
-        y="64"
-        width="62"
-        height="24"
-        rx="12"
-        className="fill-card stroke-foreground/20"
-      />
-      <g fill={TEAL}>
-        <circle cx="118" cy="76" r="2.6" />
-        <circle cx="131" cy="76" r="2.6" />
-        <circle cx="144" cy="76" r="2.6" />
-      </g>
-      <g transform="translate(150 94) scale(0.42)">
-        <MrCopper mood="happy" />
-      </g>
-      <g className="pc-anim pc-pop">
-        <rect x="16" y="98" width="92" height="28" rx="14" fill={SUNSET} />
+
+      {/* the conversation stays in the room */}
+      <g className="pc-anim pc-say-1">
+        <rect
+          x="14"
+          y={first.y}
+          width="150"
+          height={first.h}
+          rx="13"
+          className="fill-card"
+          stroke={first.stroke}
+          strokeWidth="1.5"
+        />
         <text
-          x="62"
-          y="117"
-          textAnchor="middle"
-          fontSize="12"
+          x="24"
+          y={first.y + 17}
+          fontSize="10.5"
+          fontWeight="600"
+          className="fill-foreground"
+        >
+          We ran out of coriander.
+        </text>
+      </g>
+      <g className="pc-anim pc-say-2">
+        <rect
+          x="40"
+          y={second.y}
+          width="164"
+          height={second.h}
+          rx="13"
+          className="fill-card"
+          stroke={second.stroke}
+          strokeWidth="1.5"
+        />
+        <text
+          x="50"
+          y={second.y + 16}
+          fontSize="10.5"
+          fontWeight="600"
+          className="fill-foreground"
+        >
+          Oh okay, I&apos;ll add it
+        </text>
+        <text
+          x="50"
+          y={second.y + 30}
+          fontSize="10.5"
+          fontWeight="600"
+          className="fill-foreground"
+        >
+          to the list.
+        </text>
+      </g>
+      <g className="pc-anim pc-say-3">
+        <rect
+          x="14"
+          y={third.y}
+          width="170"
+          height={third.h}
+          rx="13"
+          fill={SUNSET}
+        />
+        <text
+          x="24"
+          y={third.y + 16}
+          fontSize="10.5"
           fontWeight="800"
           fill={NIGHT}
         >
-          {wakeWord}!
+          {wakeWord}, add coriander
+        </text>
+        <text
+          x="24"
+          y={third.y + 30}
+          fontSize="10.5"
+          fontWeight="800"
+          fill={NIGHT}
+        >
+          to the shopping list.
         </text>
       </g>
+
+      {/* two people on the couch */}
+      <g>
+        <rect x="26" y="146" width="26" height="36" rx="11" fill={SUNSET} />
+        <circle
+          cx="39"
+          cy="138"
+          r="9"
+          fill={SAND}
+          stroke={NIGHT}
+          strokeOpacity="0.3"
+        />
+        <rect x="82" y="146" width="26" height="36" rx="11" fill={YELLOW} />
+        <circle
+          cx="95"
+          cy="138"
+          r="9"
+          fill={SAND}
+          stroke={NIGHT}
+          strokeOpacity="0.3"
+        />
+        <rect x="18" y="170" width="98" height="14" rx="7" fill={TEAL} />
+      </g>
+
+      {/* Mr. Copper: asleep, then shines and wakes on the wake word */}
+      <g transform="translate(173 150)">
+        <g className="pc-anim pc-halo">
+          <circle r="34" fill={YELLOW} fillOpacity="0.35" />
+          <circle r="28" fill="none" stroke={YELLOW} strokeWidth="3" />
+        </g>
+        <g transform="translate(-24 -22) scale(0.48)">
+          <g className="pc-anim pc-sleep">
+            <MrCopper mood="calm" />
+          </g>
+          <g className="pc-anim pc-awake">
+            <MrCopper mood="talk" />
+          </g>
+        </g>
+      </g>
+
+      {/* then the request goes to the cloud */}
       <line
         x1="196"
-        y1="96"
-        x2="240"
-        y2="62"
+        y1="136"
+        x2="256"
+        y2="70"
         className="stroke-foreground/25"
         strokeWidth="2"
         strokeDasharray="4 4"
       />
       <Cloud x={238} y={16} />
       <circle
-        cx="108"
-        cy="112"
+        cx="196"
+        cy="136"
         r="6"
         fill={SUNSET}
-        className="pc-anim pc-travel-a"
+        className="pc-anim pc-travel-c"
       />
     </Back>
   );
