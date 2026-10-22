@@ -13,7 +13,13 @@ const TEAL = "#4a8c82";
 type Mood = "calm" | "talk" | "think" | "happy";
 
 /** Mr. Copper, drawn in a 100 x 120 box. Place it with a transform. */
-function MrCopper({ mood = "happy" }: { mood?: Mood }) {
+function MrCopper({
+  mood = "happy",
+  glow = true,
+}: {
+  mood?: Mood;
+  glow?: boolean;
+}) {
   return (
     <g>
       <line
@@ -25,7 +31,13 @@ function MrCopper({ mood = "happy" }: { mood?: Mood }) {
         strokeWidth="3"
         strokeLinecap="round"
       />
-      <circle cx="50" cy="5" r="5" fill={TEAL} className="pc-anim pc-glow" />
+      <circle
+        cx="50"
+        cy="5"
+        r="5"
+        fill={TEAL}
+        className={glow ? "pc-anim pc-glow" : undefined}
+      />
       <rect x="28" y="64" width="44" height="42" rx="18" fill={COPPER} />
       <circle cx="50" cy="86" r="9" fill="none" stroke={SAND} strokeWidth="4" />
       <ellipse cx="22" cy="82" rx="7" ry="11" fill={COPPER} />
@@ -608,13 +620,20 @@ export function ListeningVisual({ wakeWord }: { wakeWord: string }) {
 
       {/* Mr. Copper: asleep, then shines and wakes on the wake word */}
       <g transform="translate(173 150)">
+        <circle
+          r="22"
+          fill="none"
+          stroke={YELLOW}
+          strokeWidth="3"
+          className="pc-anim pc-ring"
+        />
         <g className="pc-anim pc-halo">
           <circle r="34" fill={YELLOW} fillOpacity="0.35" />
           <circle r="28" fill="none" stroke={YELLOW} strokeWidth="3" />
         </g>
         <g transform="translate(-24 -22) scale(0.48)">
           <g className="pc-anim pc-sleep">
-            <MrCopper mood="calm" />
+            <MrCopper mood="calm" glow={false} />
           </g>
           <g className="pc-anim pc-awake">
             <MrCopper mood="talk" />
